@@ -14,6 +14,7 @@
 #import "ZebraPrinterFactory.h"
 #import "MfiBtPrinterConnection.h"
 #import <ExternalAccessory/ExternalAccessory.h>
+#import "SGD.h"
 
 @interface RCTZebraBTPrinter ()
 @end
@@ -107,4 +108,30 @@ RCT_EXPORT_METHOD(testConnection: (NSString *)printer
     });
 }
 
+RCT_EXPORT_METHOD(sgd: (NSString *)printer
+                  key:(NSString *)key
+                  value:(NSString *)value
+                  resolve: (RCTPromiseResolveBlock)resolve
+                  rejector:(RCTPromiseRejectBlock)reject){
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        id<ZebraPrinterConnection, NSObject> connection = nil;
+        connection = [[MfiBtPrinterConnection alloc] initWithSerialNumber:printer];
+        
+        BOOL success = [connection open];
+        if(success == YES){
+            NSError *error = nil;
+            [SGD SET:key withValue:value andWithPrinterConnection:connection error:&error];
+            
+            if(error == nil){
+                resolve((id)kCFBooleanTrue);
+            } else {
+                resolve((id)kCFBooleanFalse);
+            }
+            
+            [connection close];
+        } else {
+            resolve((id)kCFBooleanFalse);
+        }
+    });
+}
 @end
