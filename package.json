@@ -1,24 +1,33 @@
 {
   "name": "react-native-zebra-bt-printer",
+  "title": "React Native Zebra Bt Printer",
   "version": "18.10.11",
-  "description": "'Zebra bluetooth printer for react native'",
+  "description": "RN Zebra Printer",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git://bitbucket.org/cyclelution/react-native-zebra-bt-printer.git"
+    "url": "git+https://github.com/tonygomez/react-native-zebra-bt-printer.git",
+    "baseUrl": "https://github.com/tonygomez/react-native-zebra-bt-printer"
   },
   "keywords": [
-    "bluetooth",
-    "react-native",
-    "zebra printer"
+    "react-native"
   ],
-  "author": "Cyclelution <info@cyclelution.com>",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://bitbucket.org/cyclelution/react-native-zebra-bt-printer/issues"
+  "author": {
+    "name": "ViuLogix",
+    "email": "support@viulogix.com"
   },
-  "homepage": "https://bitbucket.org/cyclelution/react-native-zebra-bt-printer#readme"
+  "license": "MIT",
+  "licenseFilename": "LICENSE",
+  "readmeFilename": "README.md",
+  "peerDependencies": {
+    "react": "^16.8.1",
+    "react-native": ">=0.59.0-rc.0 <1.0.x"
+  },
+  "devDependencies": {
+    "react": "^16.8.3",
+    "react-native": "^0.59.10"
+  }
 }
