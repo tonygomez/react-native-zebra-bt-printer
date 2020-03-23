@@ -42,7 +42,13 @@ RCT_EXPORT_METHOD(printers: (NSString *)type
         NSArray *connectedAccessories = [sam connectedAccessories];
         for (EAAccessory *accessory in connectedAccessories) {
             if([accessory.protocolStrings indexOfObject:@"com.zebra.rawport"] != NSNotFound){
-                [printers addObject: accessory.serialNumber];
+                NSString *printerData = [NSString stringWithFormat: @"%@,%@,%@,%@",
+                    accessory.serialNumber,
+                    accessory.manufacturer,
+                    accessory.modelNumber,
+                    accessory.name];
+
+                [printers addObject: printerData];
             }
         }
 
