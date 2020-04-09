@@ -69,6 +69,8 @@ RCT_EXPORT_METHOD(printers: (NSString *)type
 
 RCT_EXPORT_METHOD(print: (NSString *)printer
                   content:(NSString *)content
+                  sgdKey:(NSString *)sgdKey
+                  sgdValue:(NSString *)sgdValue
                   resolve: (RCTPromiseResolveBlock)resolve
                   rejector:(RCTPromiseRejectBlock)reject){
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
@@ -81,12 +83,13 @@ RCT_EXPORT_METHOD(print: (NSString *)printer
             id<ZebraPrinter,NSObject> printer = [ZebraPrinterFactory getInstance:connection error:&error];
 
             if(printer != nil) {
+                [SGD SET:sgdKey withValue:sgdValue andWithPrinterConnection:connection error:&error];
                 BOOL sent = [self printContent:content onConnection:connection withError:&error];
                 if (sent != YES) {
-                    reject(@"error", @"Print failed", error);
+                    resolve((id)kCFBooleanFalse);
                 }
             } else {
-                reject(@"error", @"Could not detect Language", error);
+                resolve((id)kCFBooleanFalse);
             }
 
             [connection close];
